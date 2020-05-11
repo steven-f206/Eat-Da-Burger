@@ -1,7 +1,7 @@
 const mysql = require('mysql');
 
 // Create Connection
-const connection;
+let connection;
 
 if (process.env.JAWSDB_URL) {
     connection = mysql.createConnection(process.env.JAWSDB_URL);
@@ -15,5 +15,13 @@ if (process.env.JAWSDB_URL) {
     });
 };
 
-connection.connect();
-module.exports = connection; 
+// Making the connection
+connection.connect((err) => {
+    if (err) {
+        console.log(err);
+    }
+    console.log("connected as id " + connection.threadId);
+})
+
+// Export connection to require inside orm.js
+module.exports = connection;
