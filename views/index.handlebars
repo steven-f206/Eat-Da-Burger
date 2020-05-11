@@ -9,9 +9,22 @@
     </form>
 
     <!-- Test Data -->
-    <ul>
-        {{#each burgers}}
-        <li>{{burger_name}}</li>
-        {{/each}}
-    </ul>
+    <div id="burgersDBdata">
+        <div>
+            <h3>Burgers ordered</h3>
+            <ul>
+                {{#each orderedBurgers}}
+                <li>{{burger_name}}</li>
+                {{/each}}
+            </ul>
+        </div>
+        <div>
+            <h3>Burgers Devoured</h3>
+            <ul>
+                {{#each devouredBurgers}}
+                <li>{{burger_name}}</li>
+                {{/each}}
+            </ul>
+        </div>
+    </div>
 </section>

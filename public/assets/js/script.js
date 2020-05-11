@@ -4,7 +4,7 @@ let $burgerSubmitBtn = $(".burgerSubmit");
 
 // 3. Burger data senT to server to be dealt with by mysql database using AJAX
 let saveNote = function (note) {
-    console.log(note);
+    // console.log(note);
     return $.ajax({
         url: "/api/addBurger",
         data: note,
@@ -21,8 +21,8 @@ let handleBurgerInfoDelivery = function () {
     };
 
     saveNote(burger).then(function (burger) {
-        console.log(burger);
-
+        // console.log(burger);
+        location.reload(true);
     });
 };
 

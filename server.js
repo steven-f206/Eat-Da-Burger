@@ -36,33 +36,35 @@ app.get("/", function (req, res) {
             return res.status(500).end();
         }
 
-        res.render("index", { burgers: data });
-        //connection.end();
+        let orderedBurgers = [];
+        let devouredBurgers = [];
+
+        data.forEach(item => {
+            if (item.devoured === 0) {
+                orderedBurgers.push(item);
+            } else {
+                devouredBurgers.push(item);
+            }
+        })
+
+        res.render("index",
+            {
+                orderedBurgers: orderedBurgers,
+                devouredBurgers: devouredBurgers
+            });
     });
 });
-
-//
-
-
-app.get("/", function (req, res) {
-    res.render("index", {
-        foods: viewBurger()
-    });
-});
-
 
 //Handling requests
 
 /*  POST REQUEST */
 app.post('/api/addBurger', (req, res) => {
-    console.log(req.body);
     connection.query(`INSERT INTO burgers (burger_name, devoured) VALUES ('${req.body.burger_name}', false);`, function (err, data) {
         if (err) {
             return res.status(500).end();
         }
     });
     res.send('200');
-    // connection.end();
 });
 
 
