@@ -1,9 +1,63 @@
 /* add your css here */
 body{
-    background-color:black;
-    color:white;
+    background-color:#ffca63;
+    font-family: 'Roboto', sans-serif;
     }
     
-.save-note{
-    cursor:pointer;
-} 
+    #burgerDisplay h1{
+      color:#c24a00;
+      font-size:2em;
+      margin: 10px auto;
+    }
+    
+    .save-note{
+      cursor:pointer;
+    }
+    
+    #burgerDisplay{
+      display:flex;
+      justify-content: center;
+      flex-direction: column;
+      max-width:900px;
+      margin:0 auto;
+      margin-top:50px;
+    }
+    
+    #burgerDisplay *{ 
+      margin: 0 auto;
+    }
+    
+    #burgerDisplay form{ 
+      display: flex;
+      flex-direction: column;
+      width:100%;
+    }
+    
+    #burgerDisplay form textarea{
+      padding: 50px 20px;
+      height:150px;
+      min-height:120px;
+      max-height:180px;
+      margin-left:10%;
+      width:80%;
+      max-width:500px;
+      margin:0 auto;
+      resize: none;
+      box-sizing:border-box;
+      text-align:center;
+    }
+    
+    #burgerDisplay form button{
+      margin: 20px auto;
+      padding:5px;
+      background-color:#336da8;
+      color:white;
+      border-radius:5px;
+      border: 0 solid transparent;
+      cursor:pointer;
+      box-shadow: inset 0 -10px 10px -10px #000000;
+    }
+    
+    #burgerDisplay form button:hover{
+      background-color:#21476f;
+    } 

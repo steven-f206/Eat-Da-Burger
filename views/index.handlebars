@@ -1,9 +1,17 @@
-<ul>
-    {{#each foods}}
-    <li>{{name}}</li>
-    {{/each}}
-    <div class="icons">
-        <i class="fas fa-save text-light save-note"></i>
+<section id="burgerDisplay">
+    <img src="/assets/images/burger.png" alt="Burger" width="100px;">
+    <h1>Eat-Da-Burger</h1>
+    <!-- Form Field -->
 
-    </div>
-</ul>
+    <form action="javascript:void(0);" id="usrform" method="POST">
+        <textarea rows="3" cols="50" name="burger" type="text" form="usrform" required maxlength="30"></textarea>
+        <button id="burgerSubmit" type="submit">Submit</button>
+    </form>
+
+    <!-- Test Data -->
+    <ul>
+        {{#each burgers}}
+        <li>{{burger_name}}</li>
+        {{/each}}
+    </ul>
+</section>

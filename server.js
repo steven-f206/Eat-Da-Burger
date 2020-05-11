@@ -3,6 +3,10 @@ const express = require("express");
 const exphbs = require("express-handlebars");
 const bodyParser = require('body-parser');
 const path = require('path');
+const mysql = require('mysql');
+
+// Module Dependencies
+const connection = require("./config/connection");
 
 // Create an instance of the express app.
 var app = express();
@@ -12,7 +16,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Host Static Files so css and js files can be retrieved
-//app.use(express.static('public'));
 app.use(express.static(path.join(__dirname, '/public')));
 
 // Set the port of our application
@@ -23,22 +26,27 @@ var PORT = process.env.PORT || 9090;
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
-// Data
-
-var icecreams = [
-    { name: 'vanilla', price: 10, awesomeness: 3 },
-    { name: 'chocolate', price: 4, awesomeness: 8 },
-    { name: 'banana', price: 1, awesomeness: 1 },
-    { name: 'greentea', price: 5, awesomeness: 7 },
-    { name: 'jawbreakers', price: 6, awesomeness: 2 },
-    { name: "pistachio", price: 11, awesomeness: 15 }
-];
 
 // Routes
+
+// Use Handlebars to render the main index.html page with the plans in it.
+app.get("/", function (req, res) {
+    connection.query("SELECT * FROM burgers;", function (err, data) {
+        if (err) {
+            return res.status(500).end();
+        }
+
+        res.render("index", { burgers: data });
+        //connection.end();
+    });
+});
+
+//
+
+
 app.get("/", function (req, res) {
     res.render("index", {
-        foods: icecreams,
-        eater: "Andy"
+        foods: viewBurger()
     });
 });
 
@@ -46,10 +54,17 @@ app.get("/", function (req, res) {
 //Handling requests
 
 /*  POST REQUEST */
-app.post('/api/test', (req, res) => {
+app.post('/api/addBurger', (req, res) => {
     console.log(req.body);
+    connection.query(`INSERT INTO burgers (burger_name, devoured) VALUES ('${req.body.burger_name}', false);`, function (err, data) {
+        if (err) {
+            return res.status(500).end();
+        }
+    });
     res.send('200');
+    // connection.end();
 });
+
 
 // End of request Handling
 
