@@ -9,7 +9,7 @@
             <div id="burgers">
                 {{#each orderedBurgers}}
                 <div>
-                    <div>{{display_id}}. {{burger_name}}</div>
+                    <div>{{id}}. {{burger_name}}</div>
                     <button data-id="{{id}}">Devour it!!!</button>
                 </div>
                 {{/each}}
@@ -20,7 +20,7 @@
             <div id="burgersDevoured">
                 {{#each devouredBurgers}}
                 <div>
-                    <div>{{display_id}}. {{burger_name}}</div>
+                    <div>{{id}}. {{burger_name}}</div>
                 </div>
                 {{/each}}
             </div>
