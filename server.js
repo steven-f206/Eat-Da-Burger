@@ -45,12 +45,12 @@ app.get("/", function (req, res) {
             let orderedBurgers = [];
             let devouredBurgers = [];
 
+            // Sets a display id for burgers views
             data.forEach(item => {
                 if (item.devoured === 0) {
                     let str = String(item.id);
                     let strDigitDrop = str.substring(0, str.length - 1);
                     item.display_id = parseInt(strDigitDrop);
-                    console.log(item);
                     orderedBurgers.push(item);
                 } else {
                     let str = String(item.id);
@@ -144,8 +144,35 @@ app.put('/api/burgers/:id', (req, res) => {
     });
 
     promisedBurger.then((successMessage) => {
-        // successMessage is whatever we passed in the resolve(...) function above.
-        // It doesn't have to be a string, but if it is only a succeed message, it probably will be.
+        res.send(successMessage);
+    });
+
+
+})
+
+/* DELETE REQUEST */
+
+app.delete('/api/burgers/', (req, res) => {
+    let connection = mysql.createConnection(db_config);
+
+    let promisedBurger = new Promise((resolve, reject) => {
+        connection.query(`TRUNCATE TABLE burgers;`, function (err, data) {
+            if (err) {
+                return res.status(500).end();
+            }
+            connection.query(`ALTER TABLE burgers AUTO_INCREMENT=11;`, function (err, data) {
+                if (err) {
+                    return res.status(500).end();
+                }
+                connection.end();
+                resolve("200"); // Yay! Everything went well!
+            });
+        });
+    });
+
+    promisedBurger.then((successMessage) => {
+        // Set Auto Increment to 11 so it will always have at least 2 digits to process correctly for ids
+
         res.send(successMessage);
     });
 

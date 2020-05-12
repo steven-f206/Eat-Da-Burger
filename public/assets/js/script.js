@@ -65,7 +65,7 @@ $(document).ready(function () {
     //*************************** PUT REQUEST *********************************//
 
     // 2. A function for updating a burger from the db
-    var putBurger = function (id) {
+    let putBurger = function (id) {
         return $.ajax({
             url: "/api/burgers/" + id,
             method: "PUT"
@@ -73,10 +73,31 @@ $(document).ready(function () {
     };
 
     // 1. Click the burger
-    var handleBurgerPut = function (id) {
+    let handleBurgerPut = function (id) {
         // prevents the click listener for the list from being called when the button inside of it is clicked
 
         putBurger(id).then(function () {
+            location.reload();
+        });
+    };
+
+    //*************************** DELETE REQUEST *********************************//
+
+
+
+    // 2. A function for deleting all notes from the db
+    let deleteBurgers = function () {
+        return $.ajax({
+            url: "/api/burgers",
+            method: "DELETE"
+        });
+    };
+
+    // 1. Gets notes from the db
+    let handleBurgerDelete = function () {
+        // prevents the click listener for the list from being called when the button inside of it is clicked
+
+        deleteBurgers().then(function () {
             location.reload();
         });
     };
@@ -87,11 +108,14 @@ $(document).ready(function () {
     (function () {
         // Set initial 
         let burgersMenu = document.querySelectorAll("#burgersDBdata #burgers div button");
+        let burgersReset = document.querySelector('#burgerReset');
         //console.log(burgersMenu);
 
         burgersMenu.forEach((burger) => {
             burger.addEventListener("click", function () { handleBurgerPut(this.getAttribute('data-id')) });
         });
+
+        burgersReset.addEventListener("click", function () { handleBurgerDelete() });
 
     }());
 
