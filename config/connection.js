@@ -1,27 +1,12 @@
 const mysql = require('mysql');
 
 // Create Connection
-let connection;
-
-if (process.env.JAWSDB_URL) {
-    connection = mysql.createConnection(process.env.JAWSDB_URL);
-} else {
-    connection = mysql.createConnection({
-        host: 'localhost',
-        user: 'root',
-        password: 'Phoenix1',
-        database: 'burger_db',
-        port: 3306
-    });
+const db_config = {
+  host: 'i2cpbxbi4neiupid.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+  user: 'lvpdsed22ywnjvvg',
+  password: 'h3w8stmou4jf4o91',
+  database: 'ixd4o6qgqbz05osz',
+  port:3306
 };
 
-// Making the connection
-connection.connect((err) => {
-    if (err) {
-        console.log(err);
-    }
-    console.log("connected as id " + connection.threadId);
-})
-
-// Export connection to require inside orm.js
-module.exports = connection;
+module.exports = db_config;

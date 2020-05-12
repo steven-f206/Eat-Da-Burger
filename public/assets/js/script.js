@@ -5,11 +5,11 @@ $(document).ready(function () {
 
     //*************************** POST REQUEST *********************************//
 
-    let $burgerSubmitBtn = $(".burgerSubmit");
+    let $burgerSubmitBtn = $("#burgerSubmit");
 
     // 3. Burger data sent to server to be dealt with by mysql database using AJAX
     let saveNote = function (note) {
-        // console.log(note);
+        //console.log(note);
         return $.ajax({
             url: "/api/addBurger",
             data: note,
@@ -96,4 +96,4 @@ $(document).ready(function () {
     }());
 
 
-}); 
+});
