@@ -8,8 +8,6 @@ const mysql = require('mysql');
 // Module Dependencies
 const db_config = require("./config/connection");
 
-let connection;
-
 // Create an instance of the express app.
 var app = express();
 
