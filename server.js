@@ -30,44 +30,51 @@ app.set("view engine", "handlebars");
 // Routes
 
 // Use Handlebars to render the main index.html page with the plans in it.
-app.get("/", function(req, res) {
+app.get("/", function (req, res) {
 
-  let connection = mysql.createConnection(db_config);
+    let connection = mysql.createConnection(db_config);
 
-  let promisedBurger = new Promise((resolve, reject) => {
-    connection.query("SELECT * FROM burgers;", function(err, data) {
-      if (err) {
-        return res.status(500).end();
-      }
+    let promisedBurger = new Promise((resolve, reject) => {
+        connection.query("SELECT * FROM burgers;", function (err, data) {
+            if (err) {
+                return res.status(500).end();
+            }
 
-      connection.end();
-  
-      let  orderedBurgers = [];
-      let  devouredBurgers = [];
-  
-      data.forEach(item => {
-        if(item.devoured === 0){
-          orderedBurgers.push(item);
-        }else{
-          devouredBurgers.push(item); 
-        }
-      })  
-  
-      res.render("index", 
-      { 
-        orderedBurgers: orderedBurgers,
-        devouredBurgers: devouredBurgers
-      });
+            connection.end();
+
+            let orderedBurgers = [];
+            let devouredBurgers = [];
+
+            data.forEach(item => {
+                if (item.devoured === 0) {
+                    let str = String(item.id);
+                    let strDigitDrop = str.substring(0, str.length - 1);
+                    item.display_id = parseInt(strDigitDrop);
+                    console.log(item);
+                    orderedBurgers.push(item);
+                } else {
+                    let str = String(item.id);
+                    let strDigitDrop = str.substring(0, str.length - 1);
+                    item.display_id = parseInt(strDigitDrop);
+                    devouredBurgers.push(item);
+                }
+            })
+
+            res.render("index",
+                {
+                    orderedBurgers: orderedBurgers,
+                    devouredBurgers: devouredBurgers
+                });
+        });
+
     });
-    
-  });
-  
-  promisedBurger.then((successMessage) => {
-    // successMessage is whatever we passed in the resolve(...) function above.
-    // It doesn't have to be a string, but if it is only a succeed message, it probably will be.
-    res.send(successMessage);
 
-  }); 
+    promisedBurger.then((successMessage) => {
+        // successMessage is whatever we passed in the resolve(...) function above.
+        // It doesn't have to be a string, but if it is only a succeed message, it probably will be.
+        res.send(successMessage);
+
+    });
 });
 
 //Handling requests
@@ -75,62 +82,72 @@ app.get("/", function(req, res) {
 /*  POST REQUEST */
 app.post('/api/addBurger', (req, res) => {
 
-  let connection = mysql.createConnection(db_config);
+    let connection = mysql.createConnection(db_config);
 
-  let promisedBurger = new Promise((resolve, reject) => {
-    connection.query(`INSERT INTO burgers (burger_name, devoured) VALUES ('${req.body.burger_name}', false);`, function(err, data) {
-      if (err) {
-        return res.status(500).end();
-      }
-      connection.end();
-      
-      resolve("200"); // Yay! Everything went well!
-    }); 
-  });
-  
-  promisedBurger.then((successMessage) => {
-    // successMessage is whatever we passed in the resolve(...) function above.
-    // It doesn't have to be a string, but if it is only a succeed message, it probably will be.
-    res.send(successMessage);
-  });
+    let promisedBurger = new Promise((resolve, reject) => {
+        connection.query(`INSERT INTO burgers (burger_name, devoured) VALUES ('${req.body.burger_name}', false);`, function (err, data) {
+            if (err) {
+                return res.status(500).end();
+            }
+            connection.end();
+
+            resolve("200"); // Yay! Everything went well!
+        });
+    });
+
+    promisedBurger.then((successMessage) => {
+        // successMessage is whatever we passed in the resolve(...) function above.
+        // It doesn't have to be a string, but if it is only a succeed message, it probably will be.
+        res.send(successMessage);
+    });
 
 });
 
 /*  GET REQUEST */
 app.get('/api/burgers', (req, res) => {
-  let connection = mysql.createConnection(db_config);
-  connection.query(`SELECT * FROM burgers`, function(err, data) {
-    if (err) {
-      return res.status(500).end();
-    }
-    connection.end();
-    res.send(data);
-  });
+    let connection = mysql.createConnection(db_config);
+    connection.query(`SELECT * FROM burgers`, function (err, data) {
+        if (err) {
+            return res.status(500).end();
+        }
+        connection.end();
+        data.forEach(item => {
+            if (String(item.id).length > 1) {
+                //console.log(String(item.id).length);
+                let str = String(item.id);
+                let strDigitDrop = str.substring(0, str.length - 1);
+                item.display_Id = parseInt(strDigitDrop);
+            }
+        })
+
+        console.log(data);
+        res.send(data);
+    });
 });
 
 /* PUT REQUEST */
 
 app.put('/api/burgers/:id', (req, res) => {
-  let id = req.params.id;
+    let id = req.params.id;
 
-  let connection = mysql.createConnection(db_config);
+    let connection = mysql.createConnection(db_config);
 
-  let promisedBurger = new Promise((resolve, reject) => {
-    connection.query(`UPDATE burgers SET devoured = true WHERE id = ${id};`, function(err, data) {
-      if (err) {
-        return res.status(500).end();
-      }
-      connection.end();
-      
-      resolve("200"); // Yay! Everything went well!
+    let promisedBurger = new Promise((resolve, reject) => {
+        connection.query(`UPDATE burgers SET devoured = true WHERE id = ${id};`, function (err, data) {
+            if (err) {
+                return res.status(500).end();
+            }
+            connection.end();
+
+            resolve("200"); // Yay! Everything went well!
+        });
     });
-  });
 
-  promisedBurger.then((successMessage) => {
-    // successMessage is whatever we passed in the resolve(...) function above.
-    // It doesn't have to be a string, but if it is only a succeed message, it probably will be.
-    res.send(successMessage);
-  });
+    promisedBurger.then((successMessage) => {
+        // successMessage is whatever we passed in the resolve(...) function above.
+        // It doesn't have to be a string, but if it is only a succeed message, it probably will be.
+        res.send(successMessage);
+    });
 
 
 })
@@ -140,7 +157,7 @@ app.put('/api/burgers/:id', (req, res) => {
 
 
 // Start our server so that it can begin listening to client requests.
-app.listen(PORT, function() {
-  // Log (server-side) when our server has started
-  console.log("Server listening on: http://localhost:" + PORT);
+app.listen(PORT, function () {
+    // Log (server-side) when our server has started
+    console.log("Server listening on: http://localhost:" + PORT);
 });
