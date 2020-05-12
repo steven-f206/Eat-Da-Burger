@@ -111,6 +111,7 @@ app.get('/api/burgers', (req, res) => {
             return res.status(500).end();
         }
         connection.end();
+
         data.forEach(item => {
             if (String(item.id).length > 1) {
                 //console.log(String(item.id).length);
@@ -119,8 +120,6 @@ app.get('/api/burgers', (req, res) => {
                 item.display_Id = parseInt(strDigitDrop);
             }
         })
-
-        console.log(data);
         res.send(data);
     });
 });

@@ -8,11 +8,11 @@ $(document).ready(function () {
     let $burgerSubmitBtn = $("#burgerSubmit");
 
     // 3. Burger data sent to server to be dealt with by mysql database using AJAX
-    let saveNote = function (note) {
-        //console.log(note);
+    let saveburger = function (burger) {
+        //console.log(burger);
         return $.ajax({
             url: "/api/addBurger",
-            data: note,
+            data: burger,
             method: "POST"
         });
     };
@@ -25,7 +25,7 @@ $(document).ready(function () {
             devoured: false
         };
 
-        saveNote(burger).then(function () {
+        saveburger(burger).then(function () {
             // Calls burger data updating content
             getAndRenderBurgers();
         });
@@ -33,19 +33,24 @@ $(document).ready(function () {
 
 
     // 1. Makes call to handleBurgerInfoDelivery
-    $burgerSubmitBtn.on("click", handleBurgerInfoDelivery);
+    $burgerSubmitBtn.on("click", () => {
+        let burgerData = document.querySelector("#usrform textarea").value;
+        if (burgerData.length >= 1) {
+            handleBurgerInfoDelivery();
+        }
+    });
 
 
     //*************************** GET REQUEST *********************************//
 
 
-    // 3. Render's the list of note titles past from the db
+    // 3. Render's the list of burger titles past from the db
     let renderBurgerList = function (data) {
         location.reload();
     };
 
 
-    // 2. A function for getting all notes from the db
+    // 2. A function for getting all burgers from the db
     let getBurgers = function () {
         return $.ajax({
             url: "/api/burgers",
@@ -53,7 +58,7 @@ $(document).ready(function () {
         });
     };
 
-    // 1. Gets notes from the db
+    // 1. Gets burgers from the db
     let getAndRenderBurgers = function () {
         return getBurgers().then(function (data) {
             renderBurgerList(data);
@@ -85,7 +90,7 @@ $(document).ready(function () {
 
 
 
-    // 2. A function for deleting all notes from the db
+    // 2. A function for deleting all burgers from the db
     let deleteBurgers = function () {
         return $.ajax({
             url: "/api/burgers",
@@ -93,7 +98,7 @@ $(document).ready(function () {
         });
     };
 
-    // 1. Gets notes from the db
+    // 1. Gets burgers from the db
     let handleBurgerDelete = function () {
         // prevents the click listener for the list from being called when the button inside of it is clicked
 
