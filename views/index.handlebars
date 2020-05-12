@@ -6,19 +6,24 @@
     <div id="burgersDBdata">
         <div>
             <h3>Burgers ordered</h3>
-            <ol id="burgers">
+            <div id="burgers">
                 {{#each orderedBurgers}}
-                <li data-id="{{id}}">{{burger_name}}</li>
+                <div>
+                    <p>{{burger_name}}</p>
+                    <button data-id="{{id}}">Devour it!!!</button>
+                </div>
                 {{/each}}
-            </ol>
+            </div>
         </div>
         <div>
             <h3>Burgers Devoured</h3>
-            <ol id="burgersDevoured">
+            <div id="burgersDevoured">
                 {{#each devouredBurgers}}
-                <li data-id="{{id}}">{{burger_name}}</li>
+                <div>
+                    <div>{{burger_name}}</div>
+                </div>
                 {{/each}}
-            </ol>
+            </div>
         </div>
     </div>
 

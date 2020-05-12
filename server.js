@@ -103,6 +103,31 @@ app.get('/api/burgers', (req, res) => {
     });
 });
 
+/* PUT REQUEST */
+
+app.put('/api/burgers/:id', (req, res) => {
+    let id = req.params.id;
+
+    let promisedBurger = new Promise((resolve, reject) => {
+        connection.query(`UPDATE burgers SET devoured = true WHERE id = ${id};`, function (err, data) {
+            if (err) {
+                return res.status(500).end();
+            }
+            connection.end();
+
+            resolve("200"); // Yay! Everything went well!
+        });
+    });
+
+    promisedBurger.then((successMessage) => {
+        // successMessage is whatever we passed in the resolve(...) function above.
+        // It doesn't have to be a string, but if it is only a succeed message, it probably will be.
+        res.send(successMessage);
+    });
+
+
+})
+
 
 // End of request Handling
 
