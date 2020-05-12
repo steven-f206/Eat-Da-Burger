@@ -34,13 +34,13 @@ body{
     }
     
     #burgerDisplay form textarea{
-      padding: 50px 20px;
-      height:150px;
-      min-height:120px;
-      max-height:180px;
+      padding: 33px 20px;
+      height:100px;
+      min-height:100px;
+      max-height:150px;
       margin-left:10%;
       width:80%;
-      max-width:500px;
+      max-width:350px;
       margin:0 auto;
       resize: none;
       box-sizing:border-box;
@@ -61,7 +61,7 @@ body{
     #burgerDisplay form button:hover{
       background-color:#21476f;
     }
-    
+
     #burgersDBdata{
       display:flex;
       width:100%;
@@ -72,9 +72,9 @@ body{
       text-align:center;
     }
     
-    #burgersDBdata div ul{
-      list-style:none;
-      padding:0;
-      margin:0;
+    #burgersDBdata div ol{
+      margin: 0 auto;
+      width: 200px;
+      text-align: left;
     }
     

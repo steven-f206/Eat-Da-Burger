@@ -6,7 +6,7 @@ const path = require('path');
 const mysql = require('mysql');
 
 // Module Dependencies
-const connection = require("./config/connection");
+let connection = require("./config/connection");
 
 // Create an instance of the express app.
 var app = express();
@@ -31,27 +31,40 @@ app.set("view engine", "handlebars");
 
 // Use Handlebars to render the main index.html page with the plans in it.
 app.get("/", function (req, res) {
-    connection.query("SELECT * FROM burgers;", function (err, data) {
-        if (err) {
-            return res.status(500).end();
-        }
 
-        let orderedBurgers = [];
-        let devouredBurgers = [];
-
-        data.forEach(item => {
-            if (item.devoured === 0) {
-                orderedBurgers.push(item);
-            } else {
-                devouredBurgers.push(item);
+    let promisedBurger = new Promise((resolve, reject) => {
+        connection.query("SELECT * FROM burgers;", function (err, data) {
+            if (err) {
+                return res.status(500).end();
             }
-        })
 
-        res.render("index",
-            {
-                orderedBurgers: orderedBurgers,
-                devouredBurgers: devouredBurgers
-            });
+            connection.end();
+
+            let orderedBurgers = [];
+            let devouredBurgers = [];
+
+            data.forEach(item => {
+                if (item.devoured === 0) {
+                    orderedBurgers.push(item);
+                } else {
+                    devouredBurgers.push(item);
+                }
+            })
+
+            res.render("index",
+                {
+                    orderedBurgers: orderedBurgers,
+                    devouredBurgers: devouredBurgers
+                });
+        });
+
+    });
+
+    promisedBurger.then((successMessage) => {
+        // successMessage is whatever we passed in the resolve(...) function above.
+        // It doesn't have to be a string, but if it is only a succeed message, it probably will be.
+        res.send(successMessage);
+
     });
 });
 
@@ -59,12 +72,35 @@ app.get("/", function (req, res) {
 
 /*  POST REQUEST */
 app.post('/api/addBurger', (req, res) => {
-    connection.query(`INSERT INTO burgers (burger_name, devoured) VALUES ('${req.body.burger_name}', false);`, function (err, data) {
+
+    let promisedBurger = new Promise((resolve, reject) => {
+        connection.query(`INSERT INTO burgers (burger_name, devoured) VALUES ('${req.body.burger_name}', false);`, function (err, data) {
+            if (err) {
+                return res.status(500).end();
+            }
+            connection.end();
+
+            resolve("200"); // Yay! Everything went well!
+        });
+    });
+
+    promisedBurger.then((successMessage) => {
+        // successMessage is whatever we passed in the resolve(...) function above.
+        // It doesn't have to be a string, but if it is only a succeed message, it probably will be.
+        res.send(successMessage);
+    });
+
+});
+
+/*  GET REQUEST */
+app.get('/api/burgers', (req, res) => {
+    connection.query(`SELECT * FROM burgers`, function (err, data) {
         if (err) {
             return res.status(500).end();
         }
+        connection.end();
+        res.send(data);
     });
-    res.send('200');
 });
 
 

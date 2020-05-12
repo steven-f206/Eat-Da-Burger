@@ -1,5 +1,27 @@
 <section id="burgerDisplay">
     <img src="/assets/images/burger.png" alt="Burger" width="100px;">
+
+
+    <!-- Test Data -->
+    <div id="burgersDBdata">
+        <div>
+            <h3>Burgers ordered</h3>
+            <ol id="burgers">
+                {{#each orderedBurgers}}
+                <li data-id="{{id}}">{{burger_name}}</li>
+                {{/each}}
+            </ol>
+        </div>
+        <div>
+            <h3>Burgers Devoured</h3>
+            <ol id="burgersDevoured">
+                {{#each devouredBurgers}}
+                <li data-id="{{id}}">{{burger_name}}</li>
+                {{/each}}
+            </ol>
+        </div>
+    </div>
+
     <h1>Eat-Da-Burger</h1>
     <!-- Form Field -->
 
@@ -8,23 +30,4 @@
         <button id="burgerSubmit" type="submit">Submit</button>
     </form>
 
-    <!-- Test Data -->
-    <div id="burgersDBdata">
-        <div>
-            <h3>Burgers ordered</h3>
-            <ul>
-                {{#each orderedBurgers}}
-                <li>{{burger_name}}</li>
-                {{/each}}
-            </ul>
-        </div>
-        <div>
-            <h3>Burgers Devoured</h3>
-            <ul>
-                {{#each devouredBurgers}}
-                <li>{{burger_name}}</li>
-                {{/each}}
-            </ul>
-        </div>
-    </div>
 </section>
