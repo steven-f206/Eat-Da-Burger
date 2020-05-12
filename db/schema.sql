@@ -5,3 +5,5 @@ CREATE TABLE burgers (
   devoured boolean NOT NULL,
   PRIMARY KEY (id)
 ); 
+
+ALTER TABLE burgers AUTO_INCREMENT=11;
