@@ -96,27 +96,52 @@ body p{
 }
 
 #burgersDBdata div #burgers > div > div{
-  border: 2px solid #666;
-  background-color:white;
-  padding:5px;
+  /* border: 2px solid #666;
+  background-color: #c24a00; */
+  /* padding:5px; */
   width:50%;
   flex-direction: column;
+  font-family: Modak;
+  color: #c20a00;
+  font-size: large;
 }
 
 #burgersDBdata div #burgers > div p{
   text-align:center;
 }
 
-#burgersDBdata div #burgers > div button{
-  cursor:pointer;
+#burgersDBdata div #burgers > div button {
+	box-shadow: 3px 4px 0px 0px #899599;
+	background:linear-gradient(to bottom, #ededed 5%, #c20a00 100%);
+	background-color:#ededed;
+	border-radius:15px;
+	border:1px solid #d6bcd6;
+	display:inline-block;
+	cursor:pointer;
+	color:#000000;
+	font-family:Impact;
+	font-size:17px;
+	padding:7px 25px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #e1e2ed;
+}
+#burgersDBdata div #burgers > div button:hover {
+	background:linear-gradient(to bottom, #c20a00 5%, #ededed 100%);
+	background-color:#c20a00;
+}
+#burgersDBdata div #burgers > div button:active {
+	position:relative;
+	top:1px;
 }
 
 #burgersDevoured div > div{
 width: 50%;
 margin: 0 auto;
-background-color: white;
-color: #666;
-border: 2px solid #666;
+/* background-color: #c24a00; */
+color: #c20a00;
+font-family: Modak;
+font-size: large;
+/* border: 2px solid #666; */
 }
 
 #burgersDBdata div #burgers > div, #burgersDevoured > div{
