@@ -4,7 +4,7 @@ Assignment 13 for Georgia Tech Coding Bootcamp focusing on making an MVC app usi
 
 ## Getting Started
 Inside this repo there are mysql seed files to build a starting repo, the logic has been set for a clearDB configuration on heroku.
-A live version of the site can be found at the following. https://eat-all-da-burger.herokuapp.com/
+A live version of the site can be found at the following. https://eat-all-of-da-burger.herokuapp.com/
 
 ## Site Goals
 
